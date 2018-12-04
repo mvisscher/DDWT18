@@ -1,0 +1,15 @@
+{
+  "name": "mvisscher/DDWT18_week3",
+  "description": "",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Marieke",
+      "email": "m.j.visscher.1@student.rug.nl"
+    }
+  ],
+  "require": {
+    "bramus/router": "1.3"
+  }
+}

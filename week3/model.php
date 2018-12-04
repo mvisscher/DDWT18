@@ -22,7 +22,7 @@ error_reporting(E_ALL);
 function connect_db($host, $db, $user, $pass){
     $charset = 'utf8mb4';
 
-    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+    $dsn = "mysql:host=$host;port=8889;dbname=$db;charset=$charset";
     $options = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -257,4 +257,46 @@ function count_series($pdo){
 function redirect($location){
     header(sprintf('Location: %s', $location));
     die();
+}
+
+/**
+ * Changes the content type to application/json
+ */
+function http_content_type(){
+    header('Content-type: application/json');
+}
+
+/**
+ * Changes the username and password into an associative array
+ * @param string $username
+ * @param string $password
+ * @return array
+ */
+function set_cred($username, $password){
+    return [
+        'username'=> $username,
+        'password'=> $password
+    ];
+}
+
+/**
+ * Checks if the user has rights
+ * @param array $cred
+ * @return bool
+ */
+function check_cred($cred){
+    if (!isset($_SERVER['PHP_AUTH_USER'])){
+        return False;
+    }
+    else {
+        if ($_SERVER['PHP_AUTH_USER'] != $cred['username']){
+            return False;
+        }
+        elseif ($_SERVER['PHP_AUTH_PW'] != $cred['password']){
+            return False;
+        }
+        else {
+            return True;
+        }
+    }
 }
